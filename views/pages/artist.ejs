@@ -1,0 +1,28 @@
+<%-  include('../partials/header'); %>
+
+<!-- create artist display page -->
+<main class="mail" id="artistMain">
+    <div class="continer">
+        <div class="row">
+            <% data.forEach(item => { %>
+                <div class="col-md-4">
+                    <figure class="figure artist-figure">
+                        <img src="../../public/images/<%= item.artist_img %>" alt="image of <% item.artist %>" class="img-fluid" />
+                        <figcaption class="figure-caption artist-caption">
+                            <a href="artist/<%= item.artist_id %>">
+                                <% if (item.alias == null) {%>
+                                    <%= item.fName %> <%= item.lName %>
+                                <% } else { %>
+                                    <%= item.alias %>
+                                <% } %>
+                            </a>
+                        </figcaption>
+                    </figure>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</main>
+
+
+<%-  include('../partials/footer'); %>

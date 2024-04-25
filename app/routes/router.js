@@ -7,7 +7,10 @@ const fetch = (...args)=> import('node-fetch').then(({default: fetch}) => fetch(
 //when you use the ... before the array then it spreads out the array so the content can be retruned without brackets.
 
 router.use(express.static('public'))
+//this means we are using the public folder to handle the images
 //makes it so that the router can access what is in the public folder where the images and assets will be located
+
+const tables = ['artist', 'band']
 
 //create ROOT ROUTE => localhost:3000/api
 //will be the home to all of the endpoints from the database
@@ -20,7 +23,11 @@ router.get('/api', (req, res)=> {
 })
 
 //add this after adding to the artistRoute.js
-router.use('/api/artist', require('./api/artistRoutes'))
+tables.forEach(table => {
+    router.use(`/api/${table}`, require(`./api/${table}Routes`))
+})
+// router.use('/api/artist', require('./api/artistRoutes'))
+// router.use('/api/band', require('./api/bandRoutes'))
 
 //check by running npm run dev in the terminal
 
@@ -34,19 +41,52 @@ router.get('/', (req, res)=>{
     })
 })
 
-router.get('/artist', (req, res)=> {
-    const url = `http://localhost:${port}/api/artist`
+tables.forEach(table => {
+    router.get(`/${table}`, (req, res)=> {
+        const url = `http://localhost:${port}/api/${table}`
 
-    fetch(url)
-        .then(res => res.json())
-        .then(data => {
-            res.render('pages/artist', {
-                title: 'All Artists',
-                name: 'All Artists',
-                data
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                res.render(`pages/${table}`, {
+                    title: `All ${table}s`,
+                    name: `All${table}s`,
+                    data
+                })
             })
-        })
+    })
 })
+
+
+
+// router.get('/artist', (req, res)=> {
+//     const url = `http://localhost:${port}/api/artist`
+
+//     fetch(url)
+//         .then(res => res.json())
+//         .then(data => {
+//             res.render('pages/artist', {
+//                 title: 'All Artists',
+//                 name: 'All Artists',
+//                 data
+//             })
+//         })
+// })
+
+// router.get('/band', (req,res)=> {
+//     const url =`http://localhost:${port}/api/band`
+
+//     fetch(url)
+//         .then(res => res.json())
+//         .then(data => {
+//             res.render('pages/band' ,{
+//                 title: 'All Bands',
+//                 name: 'All Bands',
+//                 data
+//             })
+//         })
+// })
+
 
 router.get('/artist/:id', (req, res)=> {
     const id = req.params.id
@@ -60,6 +100,22 @@ router.get('/artist/:id', (req, res)=> {
             res.render('pages/artist_single', {
                 title: artist,
                 name: artist,
+                data
+            })
+        })
+})
+
+router.get('/band/:id', (req, res)=> {
+    const id = req.params.id
+    const url = `http://localhost:${port}/api/band/${id}`
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            const band = data[0].band
+            res.render('pages/band_single', {
+                title: band,
+                name: band,
                 data
             })
         })

@@ -7,9 +7,9 @@
             <% data.forEach(item => { %>
                 <div class="col-md-4">
                     <figure class="figure artist-figure">
-                        <img src="../../public/images/<%= item.artist_img %>" alt="image of <% item.artist %>" class="img-fluid" />
+                        <img src="/images/<%= item.imgUrl %>" alt="image of <% item.artist %>" class="img-fluid" />
                         <figcaption class="figure-caption artist-caption">
-                            <a href="artist/<%= item.artist_id %>">
+                            <a href="/artist/<%= item.artist_id %>">
                                 <% if (item.alias == null) {%>
                                     <%= item.fName %> <%= item.lName %>
                                 <% } else { %>

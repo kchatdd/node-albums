@@ -1,26 +1,12 @@
 const con = require('../../config/dbconfig')
 
-const artistDao = {
-    table: 'artist', 
+const bandDao = {
+    table: 'band', 
     getInfo: (res, table, id)=> {
         con.execute(
-            `SELECT al.album_id, al.title, al.yr_released, al.album_cover,
-                CASE 
-                    WHEN ar.alias IS NULL THEN ''
-                    ELSE ar.alias
-                    END alias,
-                CASE 
-                    WHEN ar.fName IS NULL THEN ''
-                    ELSE ar.fName
-                    END fName,
-                CASE 
-                    WHEN ar.lName IS NULL THEN ''
-                    ELSE ar.lName 
-                    END lName,
-            ar.imgUrl,
-            ar.artist_id 
+            `SELECT al.album_id, al.title, al.yr_released, al.album_cover, b.band, b.imgUrl,b.band_id 
             FROM album al 
-            JOIN artist ar USING (artist_id)
+            JOIN band b USING (band_id)
             WHERE ${table}_id = ${id}
             ORDER BY al.yr_released;`,
             (error, rows)=> {
@@ -92,7 +78,7 @@ const artistDao = {
 
     sort: (req, res, table)=> {
         con.execute(
-            `SELECT * FROM ${table} ORDER BY lName, fName`,
+            `SELECT * FROM ${table} ORDER BY b.band;`,
             (error, rows)=> {
                 if (!error) {
                     if (rows.length === 1) {
@@ -111,7 +97,7 @@ const artistDao = {
 
 //write specific methods inside of specific/individual daos. Put common daos in the common file
 
-module.exports = artistDao
+module.exports = bandDao
 
 
 

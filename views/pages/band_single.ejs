@@ -1,6 +1,6 @@
 <%-  include('../partials/header'); %>
 
-<main class="main" id="artistSingleMain">
+<main class="main" id="bandSingleMain">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -10,7 +10,7 @@
                 <div class="row">
                     <% data.forEach(item => { %>
                         <div class="col-sm-4">
-                            <figure class="figure artist-single-figure">
+                            <figure class="figure band-single-figure">
                                 <img src="/images/<%= item.album_cover %>" alt="image of <%= item.album_cover %>" class="img-fluid" />
                                 <figcaption class="figure-caption">
                                     <%= item.title %> | <%= item.yr_released %>

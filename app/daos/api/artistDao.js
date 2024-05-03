@@ -92,7 +92,7 @@ const artistDao = {
 
     sort: (req, res, table)=> {
         con.execute(
-            `SELECT * FROM ${table} ORDER BY lName, fName`,
+            `SELECT * FROM ${table} ORDER BY lName, fName;`,
             (error, rows)=> {
                 if (!error) {
                     if (rows.length === 1) {

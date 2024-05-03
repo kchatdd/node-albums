@@ -16,17 +16,11 @@ so that all of the content can be accessed
 
 This document will be updated as more daos are created
  */
-const artistDao = {
-    ...daoCommon,
-    ...require('./api/artistDao')
-}
+const artistDao = {...daoCommon,...require('./api/artistDao')}
 
-const bandDao = {
-    ...daoCommon,
-    ...require('./api/bandDao')
-}
+const bandDao = {...daoCommon,...require('./api/bandDao')}
+
+const albumDao = {...daoCommon,...require('./api/albumDao')}
 
 module.exports = {
-    artistDao,
-    bandDao
-}
+    artistDao, bandDao, albumDao}

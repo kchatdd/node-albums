@@ -14,17 +14,19 @@ router.get('/count', (req, res)=> {
 })
 
 router.get('/sort', (req, res)=> {
-    dao.sortAll(res, dao.table)
+    dao.sort(req, res, dao.table)
 })
 
 router.get('/:id', (req, res)=> {
     dao.getInfo(res, dao.table, req.params.id)
 })
 
-router.get('/create', (req, res)=> {
-    dao.create(req, res)
+router.post('/create', (req, res)=> {
+    dao.create(req, res, dao.table)
 })
 
-router.patch('/update')
+router.patch('/update/:id', (req, res)=> {
+    dao.update(req,res)
+})
 
 module.exports = router

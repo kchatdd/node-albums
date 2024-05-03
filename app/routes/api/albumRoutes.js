@@ -3,10 +3,10 @@ const router = express.Router()
 
 //localhost:3000/api/artist
 
-const { bandDao: dao} = require('../../daos/dao')
+const { albumDao: dao} = require('../../daos/dao')
 
 router.get('/', (req, res)=> {
-    dao.findAll(res, dao.table)
+    dao.getAlbumInfo(res, dao.table)
 })
 
 router.get('/count', (req, res)=> {
@@ -14,19 +14,17 @@ router.get('/count', (req, res)=> {
 })
 
 router.get('/sort', (req, res)=> {
-    dao.sort(req, res, dao.table)
+    dao.sort(res, dao.table)
 })
 
 router.get('/:id', (req, res)=> {
     dao.getInfo(res, dao.table, req.params.id)
 })
 
-router.post('/create', (req, res)=> {
-    dao.create(req, res, dao.table)
+router.get('/create', (req, res)=> {
+    dao.create(req, res)
 })
 
-router.patch('/update/:id', (req, res)=> {
-    dao.update(req,res)
-})
+router.patch('/update')
 
 module.exports = router

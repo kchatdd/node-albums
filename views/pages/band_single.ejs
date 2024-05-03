@@ -9,11 +9,11 @@
             <div class="col-md-6">
                 <div class="row">
                     <% data.forEach(item => { %>
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">
                             <figure class="figure band-single-figure">
-                                <img src="/images/<%= item.album_cover %>" alt="image of <%= item.album_cover %>" class="img-fluid" />
+                                <img src="/images/<%= item.album_cover %>" alt="image of <%= item.album_cover %>" class="img-fluid img-thumbnail" />
                                 <figcaption class="figure-caption">
-                                    <%= item.title %> | <%= item.yr_released %>
+                                    <%= item.title %> | <%= item.yr_released %> | <%= item.label %>
                                 </figcaption>
                             </figure>
                         </div>

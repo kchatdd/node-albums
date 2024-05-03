@@ -1,18 +1,89 @@
 const con = require('../../config/dbconfig')
 
-const bandDao = {
-    table: 'band', 
+const albumDao = {
+    table: 'album', 
+
+    getAlbumInfo: (res, table)=> {
+        con.execute(
+            `SELECT al.album_id, al.title, al.yr_released, al.album_cover,
+                CASE 
+                    WHEN ar.alias IS NULL THEN ''
+                    ELSE ar.alias
+                    END alias,
+                CASE 
+                    WHEN ar.fName IS NULL THEN ''
+                    ELSE ar.fName
+                    END fName,
+                CASE 
+                    WHEN ar.lName IS NULL THEN ''
+                    ELSE ar.lName 
+                    END lName,
+                CASE
+                    WHEN b.band is NULL THEN ''
+                    ELSE b.band
+                    END band,
+            ar.imgUrl,
+            ar.artist_id,
+            b.band_id,
+            b.imgUrl,
+            l.label_id,
+            l.label 
+            FROM album al 
+            LEFT OUTER JOIN artist ar USING (artist_id)
+            LEFT OUTER JOIN band b USING (band_id)
+            JOIN label l USING (label_id);`,
+            (error, rows)=> {
+                if (!error) {
+                    if (rows.length === 1) {
+                        res.json(...rows)
+                    } else {
+                        res.json(rows)
+                    }
+                } else {
+                    console.log('DAO ERROR', error)
+                }
+            }
+        )
+    },
+
     getInfo: (res, table, id)=> {
         con.execute(
-            `SELECT al.album_id, al.title, al.yr_released, al.album_cover, b.band, b.imgUrl,b.band_id, l.label 
+            `SELECT al.album_id, al.title, al.yr_released, al.album_cover,
+                CASE 
+                    WHEN ar.alias IS NULL THEN ''
+                    ELSE ar.alias
+                    END alias,
+                CASE 
+                    WHEN ar.fName IS NULL THEN ''
+                    ELSE ar.fName
+                    END fName,
+                CASE 
+                    WHEN ar.lName IS NULL THEN ''
+                    ELSE ar.lName 
+                    END lName,
+                CASE
+                    WHEN b.band is NULL THEN ''
+                    ELSE b.band
+                    END band,
+            ar.imgUrl,
+            ar.artist_id,
+            b.band_id,
+            b.imgUrl,
+            l.label_id,
+            l.label 
             FROM album al 
-            LEFT OUTER JOIN label l USING (label_id)
-            JOIN band b USING (band_id)
+            LEFT OUTER JOIN artist ar USING (artist_id)
+            LEFT OUTER JOIN band b USING (band_id)
+            JOIN label l USING (label_id)
             WHERE ${table}_id = ${id}
             ORDER BY al.yr_released;`,
             (error, rows)=> {
                 if (!error) {
-                    res.json(rows)
+                    if (rows.length === 1) {
+                        res.json(...rows)
+                    } else {
+                        res.json(rows)
+                    }
                 } else {
                     console.log('DAO ERROR', error)
                 }
@@ -36,11 +107,7 @@ const bandDao = {
                 values,
                 (error, dbres)=> {
                     if (!error) {
-                        // res.send(`Last id: ${dbres.insertId}`)
-                        res.render('pages/confirm_page', {
-                            title: 'Success',
-                            name: 'Success'
-                        })
+                        res.send(`Last id: ${dbres.insertId}`)
                     } else {
                         console.log('DAO ERROR', error)
                         res.send('Error creating record')
@@ -83,7 +150,7 @@ const bandDao = {
 
     sort: (req, res, table)=> {
         con.execute(
-            `SELECT * FROM ${table} ORDER BY band;`,
+            `SELECT * FROM ${table} ORDER BY title;`,
             (error, rows)=> {
                 if (!error) {
                     if (rows.length === 1) {
@@ -102,7 +169,7 @@ const bandDao = {
 
 //write specific methods inside of specific/individual daos. Put common daos in the common file
 
-module.exports = bandDao
+module.exports = albumDao
 
 
 

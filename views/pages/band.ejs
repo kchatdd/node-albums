@@ -1,13 +1,19 @@
 <%-  include('../partials/header'); %>
 
-<!-- create artist display page -->
-<main class="mail" id="bandMain">
-    <div class="continer">
+<!-- create band display page -->
+<main class="main" id="bandMain">
+    <div class="container">
+        <div class="row">
+            <nav class="nav justify-content-evenly">
+                <a href="/band/form" class="nav-link">Add a Band</a>
+                <a href="/band/sort" class="nav-link">Sort Bands</a>
+            </nav>
+        </div>
         <div class="row">
             <% data.forEach(item => { %>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <figure class="figure band-figure">
-                        <img src="/images/<%= item.imgUrl %>" alt="image of <% item.band %>" class="img-fluid" />
+                        <img src="/images/<%= item.imgUrl %>" alt="image of <% item.band %>" class="img-fluid img-thumbnail" />
                         <figcaption class="figure-caption band-caption">
                             <a href="/band/<%= item.band_id %>">
                                 <%= item.band %>

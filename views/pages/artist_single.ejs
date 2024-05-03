@@ -11,7 +11,7 @@
                     <% data.forEach(item => { %>
                         <div class="col-sm-4">
                             <figure class="figure artist-single-figure">
-                                <img src="/images/<%= item.album_cover %>" alt="image of <%= item.album_cover %>" class="img-fluid" />
+                                <img src="/images/<%= item.album_cover %>" alt="image of <%= item.album_cover %>" class="img-fluid img-thumbnail" />
                                 <figcaption class="figure-caption">
                                     <%= item.title %> | <%= item.yr_released %>
                                 </figcaption>

@@ -1,8 +1,14 @@
 <%-  include('../partials/header'); %>
 
 <!-- create artist display page -->
-<main class="mail" id="artistMain">
-    <div class="continer">
+<main class="main" id="artistMain">
+    <div class="container">
+        <div class="row">
+            <nav class="nav justify-content-evenly">
+                <a href="/artist/form" class="nav-link">Add an Artist</a>
+                <a href="/artist/sort" class="nav-link">Sort Artists</a>
+            </nav>
+        </div>
         <div class="row">
             <% data.forEach(item => { %>
                 <div class="col-md-4">
@@ -10,7 +16,7 @@
                         <img src="/images/<%= item.imgUrl %>" alt="image of <% item.artist %>" class="img-fluid" />
                         <figcaption class="figure-caption artist-caption">
                             <a href="/artist/<%= item.artist_id %>">
-                                <% if (item.alias == null) {%>
+                                <% if (item.alias == null || item.alias == '') {%>
                                     <%= item.fName %> <%= item.lName %>
                                 <% } else { %>
                                     <%= item.alias %>

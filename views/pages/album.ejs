@@ -1,0 +1,46 @@
+<%-  include('../partials/header'); %>
+
+<!-- create artist display page -->
+<main class="main" id="albumMain">
+    <div class="container">
+        <div class="row">
+            <nav class="nav justify-content-evenly">
+                <a href="/album/form" class="nav-link">Add an Album
+                </a>
+                <a href="/album/sort" class="nav-link">Sort Albums</a>
+            </nav>
+            <% data.forEach(item => { %>
+                <div class="col-md-3">
+                    <figure class="figure album-figure">
+                        <a href="/album/<%= item.album_id %>">
+                            <img 
+                                src="/images/<%= item.album_cover %>" 
+                                alt="image of <% item.album_cover %>" 
+                                class="figure-img img-fluid album-cover-img rounded" 
+                            />
+                        </a>
+                        <figcaption class="figure-caption album-caption">
+                            <%= item.title %> | 
+                            <% if (item.band == '') { %>
+                                <a href="/artist/<%= item.artist_id %>">
+                                    <% if (item.alias == '') { %>
+                                        <%= item.fName %> <%= item.lName %>
+                                    <% } else { %>
+                                        <%= item.alias %> 
+                                    <% } %>   
+                                </a>
+                            <% } else { %>
+                                <a href="/band/<%= item.band_id %>">
+                                    <%= item.band %>
+                                </a>
+                            <% } %>
+                        </figcaption>
+                    </figure>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</main>
+
+
+<%-  include('../partials/footer'); %>

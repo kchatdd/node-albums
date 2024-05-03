@@ -10,7 +10,7 @@ router.use(express.static('public'))
 //this means we are using the public folder to handle the images
 //makes it so that the router can access what is in the public folder where the images and assets will be located
 
-const tables = ['artist', 'band']
+const tables = ['artist', 'band', 'album']
 
 //create ROOT ROUTE => localhost:3000/api
 //will be the home to all of the endpoints from the database
@@ -50,12 +50,28 @@ tables.forEach(table => {
             .then(data => {
                 res.render(`pages/${table}`, {
                     title: `All ${table}s`,
-                    name: `All${table}s`,
+                    name: `All ${table}s`,
+                    data
+                })
+            })
+    })
+
+
+    router.get(`/${table}/sort`, (req, res)=> {
+        const url = `http://localhost:${port}/api/${table}/sort`
+
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                res.render(`pages/${table}`, {
+                    title: `All ${table}s`,
+                    name: `All ${table}s`,
                     data
                 })
             })
     })
 })
+
 
 
 
@@ -87,6 +103,12 @@ tables.forEach(table => {
 //         })
 // })
 
+router.get('/artist/form', (req, res)=> {
+    res.render('pages/artist_form', {
+        title: 'Artist Form',
+        name: 'Artist Form'
+    })
+})
 
 router.get('/artist/:id', (req, res)=> {
     const id = req.params.id
@@ -105,6 +127,13 @@ router.get('/artist/:id', (req, res)=> {
         })
 })
 
+router.get('/band/form', (req, res)=> {
+    res.render('pages/band_form', {
+        title: 'Band Form',
+        name: 'Band Form'
+    })
+})
+
 router.get('/band/:id', (req, res)=> {
     const id = req.params.id
     const url = `http://localhost:${port}/api/band/${id}`
@@ -116,6 +145,21 @@ router.get('/band/:id', (req, res)=> {
             res.render('pages/band_single', {
                 title: band,
                 name: band,
+                data
+            })
+        })
+})
+
+router.get('/album/:id', (req, res)=> {
+    const id = req.params.id
+    const url = `http://localhost:${port}/api/album/${id}`
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            res.render('pages/album_single', {
+                title: `${data.title}`,
+                name: `${data.title}`,
                 data
             })
         })
